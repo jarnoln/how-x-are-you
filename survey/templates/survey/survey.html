@@ -7,13 +7,23 @@
 {% if not survey %}
   {% trans 'No survey' %}
 {% endif %}
+
 <h1> {{ survey.title }} </h1>
 <p> {{ survey.description }} </p>
 
 <table class="table">
+<thead>
+<th> Kysymys </th>
+<th> Ehdottomasti </th>
+<th> Ehkä joo </th>
+<th> EOS </th>
+<th> Ehkä ei </th>
+<th> Ei todellakaan </th>
+</thead>
 {% for question in survey.question_set.all %}
   <tr>
     <td>{{ question.title }}</td>
+    <td colspan="5"> &nbsp; </td>
   </tr>
 {% endfor %}
 </table>
