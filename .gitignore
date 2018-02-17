@@ -3,4 +3,6 @@ passwords.py
 .idea
 migrations
 *.pyc
+*.retry
+*.log
 
