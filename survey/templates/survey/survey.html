@@ -11,21 +11,33 @@
 <h1> {{ survey.title }} </h1>
 <p> {{ survey.description }} </p>
 
+<form action="" method="post">
+{% csrf_token %}
 <table class="table">
-<thead>
-<th> Kysymys </th>
-<th> Ehdottomasti </th>
-<th> Ehkä joo </th>
-<th> EOS </th>
-<th> Ehkä ei </th>
-<th> Ei todellakaan </th>
-</thead>
+  <thead>
+    <tr>
+      <th> Kysymys </th>
+      <th> Ehdottomasti </th>
+      <th> Ehkä joo </th>
+      <th> EOS </th>
+      <th> Ehkä ei </th>
+      <th> Ei todellakaan </th>
+    </tr>
+  </thead>
+  <tbody>
 {% for question in survey.question_set.all %}
-  <tr>
-    <td>{{ question.title }}</td>
-    <td colspan="5"> &nbsp; </td>
-  </tr>
+    <tr>
+      <td>{{ question.title }}</td>
+      <td> <input type="radio" name="q-{{ question.id }}" value="10"> </td>
+      <td> <input type="radio" name="q-{{ question.id }}" value="5"> </td>
+      <td> <input type="radio" name="q-{{ question.id }}" value="0" checked="true"> </td>
+      <td> <input type="radio" name="q-{{ question.id }}" value="-5"> </td>
+      <td> <input type="radio" name="q-{{ question.id }}" value="-10"> </td>
+    </tr>
 {% endfor %}
+  </tbody>
 </table>
-
+{% trans "Submit" as save_txt %}
+<div><input type="submit" class="btn btn-primary" value="{{ save_txt }}"></div>
+</form>
 {% endblock content %}
