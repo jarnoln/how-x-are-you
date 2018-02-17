@@ -16,7 +16,11 @@
 {% endif %}
 
 {% if feedback.description %}
-<p class="text-center"> {{ feedback.description }} </p>
+<h3 class="text-center"> {{ feedback.description }} </h3>
+{% endif %}
+
+{% if reference.description %}
+<div> {{ reference.description|safe }} </div>
 {% endif %}
 
 <h3> {% trans 'Score' %} </h3>

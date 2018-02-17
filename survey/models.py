@@ -49,11 +49,13 @@ class Reference(models.Model):
         if exact.first():
             return exact.first()
 
-        feedbacks = feedbacks.filter(min_score__lte=score)
-        if score == 100:
-            feedbacks = feedbacks.filter(max_score__gte=score)
+        feedbacks = feedbacks.filter(exact_score=None)
+        if score == 0:
+            feedbacks = feedbacks.filter(min_score__lte=score)
         else:
-            feedbacks = feedbacks.filter(max_score__gt=score)
+            feedbacks = feedbacks.filter(min_score__lt=score)
+
+        feedbacks = feedbacks.filter(max_score__gte=score)
         return feedbacks.first()
 
     def __str__(self):
@@ -82,6 +84,9 @@ class Feedback(models.Model):
 
     def __str__(self):
         if self.exact_score:
-            return '{} == {}'.format(self.title, self.exact_score)
+            return '{}:{} == {}'.format(self.reference.name, self.title, self.exact_score)
         else:
-            return '{}:from {} to {}'.format(self.title, self.min_score, self.max_score)
+            return '{}:{}:from {} to {}'.format(self.reference.name, self.title, self.min_score, self.max_score)
+
+    class Meta:
+        ordering = ['min_score']

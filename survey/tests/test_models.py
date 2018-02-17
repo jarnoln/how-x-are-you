@@ -62,11 +62,14 @@ class ReferenceModelTest(TestCase):
         reference = Reference.objects.create(survey=survey, name='plato', title='Plato')
         self.assertEqual(reference.feedback(0), None)
         fb_1 = Feedback.objects.create(reference=reference, title='Grasshopper', min_score=0, max_score=25)
-        fb_2 = Feedback.objects.create(reference=reference, title='Guru', min_score=75, max_score=100)
+        fb_2 = Feedback.objects.create(reference=reference, title='On the fence', exact_score=50)
+        fb_3 = Feedback.objects.create(reference=reference, title='Guru', min_score=75, max_score=100)
         self.assertEqual(reference.feedback(0), fb_1)
-        self.assertEqual(reference.feedback(25), None)
-        self.assertEqual(reference.feedback(80), fb_2)
-        self.assertEqual(reference.feedback(100), fb_2)
+        self.assertEqual(reference.feedback(25), fb_1)
+        self.assertEqual(reference.feedback(50), fb_2)
+        self.assertEqual(reference.feedback(75), None)
+        self.assertEqual(reference.feedback(80), fb_3)
+        self.assertEqual(reference.feedback(100), fb_3)
 
 
 class AnswerModelTest(TestCase):
@@ -100,4 +103,4 @@ class FeedbackModelTest(TestCase):
         survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
         reference = Reference.objects.create(survey=survey, name='plato', title='Plato')
         instance = Feedback.objects.create(reference=reference, title='Grasshopper', min_score=10, max_score=20)
-        self.assertEqual(str(instance), 'Grasshopper:from 10 to 20')
+        self.assertEqual(str(instance), 'plato:Grasshopper:from 10 to 20')
