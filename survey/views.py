@@ -18,9 +18,8 @@ def submit_survey(request, survey_name):
     for question in survey.question_set.all():
         key = 'q-{}'.format(question.id)
         answer_value = int(request.POST.get(key, '0'))
-
-        points = answer_value  # Value between -10 and +10 (0 being no comment)
-        npoints = (answer_value + 10) / 2  # Value between 0 and 10 (5 being no comment)
+        points = answer_value  # Value between -2 and +2 (0 being no comment)
+        npoints = answer_value + 2  # Value between 0 and 4 (2 being no comment)
         answer_list.append({'question': question,
                             'answer': answer_value,
                             'points': points,
@@ -30,12 +29,13 @@ def submit_survey(request, survey_name):
         nscore += npoints
         # print('{}:{}'.format(question.title, answer_value))
 
-    max_score = survey.question_set.count() * 10
+    max_score = survey.question_set.count() * 2
+    nmax_score = survey.question_set.count() * 4
     pct = 0
     npct = 0
     if max_score > 0:
         pct = float(score * 100) / max_score
-        npct = float(nscore * 100) / max_score
+        npct = float(nscore * 100) / nmax_score
 
     context = {
         'survey': survey,
@@ -44,6 +44,7 @@ def submit_survey(request, survey_name):
         'score': score,
         'nscore': nscore,
         'max_score': max_score,
+        'nmax_score': nmax_score,
         'pct': pct,
         'npct': npct
     }

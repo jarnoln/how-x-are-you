@@ -19,13 +19,14 @@ class SubmitSurveyPageTest(TestCase):
         q1 = models.Question.objects.create(survey=survey, title="Question 1")
         ref = models.Reference.objects.create(survey=survey, name="testable", title="Testable")
         response = self.client.post(reverse(self.url_name, args=[survey.name]),
-                                    data={'q-{}'.format(q1.id): '10'},
+                                    data={'q-{}'.format(q1.id): '2'},
                                     follow=True)
         self.assertEqual(response.context['survey'], survey)
         self.assertEqual(response.context['reference'], ref)
-        self.assertEqual(response.context['max_score'], 10)
-        self.assertEqual(response.context['score'], 10)
-        self.assertEqual(response.context['nscore'], 10)
+        self.assertEqual(response.context['max_score'], 2)
+        self.assertEqual(response.context['nmax_score'], 4)
+        self.assertEqual(response.context['score'], 2)
+        self.assertEqual(response.context['nscore'], 4)
         self.assertEqual(response.context['pct'], 100.0)
         self.assertEqual(response.context['npct'], 100.0)
         self.assertEqual(len(response.context['answers']), 1)

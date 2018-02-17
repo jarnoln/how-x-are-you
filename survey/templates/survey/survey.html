@@ -3,13 +3,13 @@
 
 {% block title %}{{ survey.title }}{% endblock %}
 {% block content %}
-
+<br/>
 {% if not survey %}
   {% trans 'No survey' %}
 {% else %}
 
-<h1> {{ survey.title }} </h1>
-<p> {{ survey.description }} </p>
+<h1 class="text-center"> {{ survey.title }} </h1>
+<p class="text-center"> {{ survey.description }} </p>
 
 <form action="{% url 'survey_submit' survey.name %}" method="post">
 {% csrf_token %}
@@ -17,22 +17,22 @@
   <thead>
     <tr>
       <th> {% trans 'Question' %} </th>
-      <th> Ehdottomasti </th>
-      <th> Ehkä joo </th>
-      <th> EOS </th>
-      <th> Ehkä ei </th>
-      <th> Ei todellakaan </th>
+      <th> {% trans 'Definitely yes' %} </th>
+      <th> {% trans 'Maybe yes' %} </th>
+      <th> {% trans 'Dunno' %} </th>
+      <th> {% trans 'Maybe no' %} </th>
+      <th> {% trans 'Definitely no' %} </th>
     </tr>
   </thead>
   <tbody>
 {% for question in survey.questions %}
     <tr>
       <td>{{ question.title }}</td>
-      <td> <input type="radio" name="q-{{ question.id }}" value="10"> </td>
-      <td> <input type="radio" name="q-{{ question.id }}" value="5"> </td>
-      <td> <input type="radio" name="q-{{ question.id }}" value="0" checked="true"> </td>
-      <td> <input type="radio" name="q-{{ question.id }}" value="-5"> </td>
-      <td> <input type="radio" name="q-{{ question.id }}" value="-10"> </td>
+      <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="2"> </td>
+      <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="1"> </td>
+      <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="0" checked="true"> </td>
+      <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="-1"> </td>
+      <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="-2"> </td>
     </tr>
 {% endfor %}
   </tbody>

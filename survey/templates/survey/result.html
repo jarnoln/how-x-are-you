@@ -8,6 +8,7 @@
   {% trans 'No survey' %}
 {% else %}
 
+<br/>
 <h1 class="text-center"> {% trans 'You are' %} {{ npct|floatformat:0 }} % {{ reference.title }}</h1>
 
 <h3> {% trans 'Score' %} </h3>
@@ -26,13 +27,15 @@
       <td class="text-right {% if answer.points < 0 %}table-danger{% elif answer.points > 0 %}table-success{% endif %}">
         {{ answer.points }}
       </td>
-      <td class="text-right">{{ answer.npoints|floatformat:1 }}</td>
+      <td class="text-right {% if answer.points < 0 %}table-danger{% elif answer.points > 0 %}table-success{% endif %}">
+        {{ answer.npoints }}
+      </td>
     </tr>
 {% endfor %}
     <tr>
       <th> Total </th>
       <th class="text-right"> {{ score }} / {{ max_score }} ({{ pct|floatformat:0 }} %)</th>
-      <th class="text-right"> {{ nscore|floatformat:1 }} / {{ max_score }} ({{ npct|floatformat:0 }} %) </th>
+      <th class="text-right"> {{ nscore }} / {{ nmax_score }} ({{ npct|floatformat:0 }} %) </th>
     </tr>
   </tbody>
 </table>
