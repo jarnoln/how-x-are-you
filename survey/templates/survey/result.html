@@ -1,0 +1,41 @@
+{% extends "survey/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ survey.title }}{% endblock %}
+{% block content %}
+
+{% if not survey %}
+  {% trans 'No survey' %}
+{% else %}
+
+<h1> {{ survey.title }} </h1>
+
+<h2> {% trans 'You are' %} {{ npct|floatformat:0 }} % </h2>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th> {% trans 'Question' %} </th>
+      <th> {% trans 'Points' %} </th>
+      <th> {% trans 'NPoints' %} </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for answer in answers %}
+    <tr>
+      <td>{{ answer.question.title }}</td>
+      <td>{{ answer.points }}</td>
+      <td>{{ answer.npoints|floatformat:1 }}</td>
+    </tr>
+{% endfor %}
+    <tr>
+      <th> Total </th>
+      <th> {{ score }} / {{ max_score }} </th>
+    </tr>
+  </tbody>
+</table>
+<div><a href="{% url 'survey' %}">{% trans 'Back' %}</div>
+
+{% endif %}
+{% endblock content %}

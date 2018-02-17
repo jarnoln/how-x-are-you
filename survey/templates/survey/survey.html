@@ -11,7 +11,7 @@
 <h1> {{ survey.title }} </h1>
 <p> {{ survey.description }} </p>
 
-<form action="{% url 'survey_submit' survey.id %}" method="post">
+<form action="{% url 'survey_submit' survey.name %}" method="post">
 {% csrf_token %}
 <table class="table">
   <thead>
