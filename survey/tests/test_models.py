@@ -14,6 +14,21 @@ class SurveyModelTest(TestCase):
         instance = Survey.objects.create(name='philosophy', title='Philosophical questions')
         self.assertEqual(str(instance), instance.name)
 
+    def test_questions(self):
+        survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
+        self.assertEqual(survey.questions.count(), 0)
+        q1 = Question.objects.create(survey=survey, title='Why?')
+        self.assertEqual(survey.questions.count(), 1)
+        self.assertEqual(survey.questions.first(), q1)
+        q2 = Question.objects.create(survey=survey, title='How?')
+        self.assertEqual(survey.questions.count(), 2)
+        self.assertEqual(survey.questions.first(), q2)
+        q1.order = 1
+        q2.order = 2
+        q1.save()
+        q2.save()
+        self.assertEqual(survey.questions.first(), q1)
+
 
 class QuestionModelTest(TestCase):
     def test_can_save_and_load(self):

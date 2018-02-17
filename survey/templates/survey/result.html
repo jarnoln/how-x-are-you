@@ -8,9 +8,7 @@
   {% trans 'No survey' %}
 {% else %}
 
-<h1> {{ survey.title }} </h1>
-
-<h2> {% trans 'You are' %} {{ npct|floatformat:0 }} % </h2>
+<h1 class="text-center"> {% trans 'You are' %} {{ npct|floatformat:0 }} % </h1>
 
 <table class="table">
   <thead>

@@ -13,12 +13,17 @@ class Survey(models.Model):
     # created_by = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, related_name='blog_created_by')
     edited = models.DateTimeField(auto_now=True)
 
+    @property
+    def questions(self):
+        return Question.objects.filter(survey=self).order_by('order','title')
+
     def __str__(self):
         return self.name
 
 
 class Question(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    order = models.IntegerField(default=0)
     title = models.CharField(max_length=250)
     description = models.TextField(default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
