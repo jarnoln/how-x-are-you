@@ -12,26 +12,26 @@
 
 <h2> {% trans 'You are' %} {{ npct|floatformat:0 }} % </h2>
 
-
 <table class="table">
   <thead>
     <tr>
       <th> {% trans 'Question' %} </th>
-      <th> {% trans 'Points' %} </th>
-      <th> {% trans 'NPoints' %} </th>
+      <th class="text-right"> {% trans 'Points' %} </th>
+      <th class="text-right"> {% trans 'NPoints' %} </th>
     </tr>
   </thead>
   <tbody>
 {% for answer in answers %}
     <tr>
       <td>{{ answer.question.title }}</td>
-      <td>{{ answer.points }}</td>
-      <td>{{ answer.npoints|floatformat:1 }}</td>
+      <td class="text-right">{{ answer.points }}</td>
+      <td class="text-right">{{ answer.npoints|floatformat:1 }}</td>
     </tr>
 {% endfor %}
     <tr>
       <th> Total </th>
-      <th> {{ score }} / {{ max_score }} </th>
+      <th class="text-right"> {{ score }} / {{ max_score }} ({{ pct|floatformat:0 }} %)</th>
+      <th class="text-right"> {{ nscore|floatformat:1 }} / {{ max_score }} ({{ npct|floatformat:0 }} %) </th>
     </tr>
   </tbody>
 </table>
