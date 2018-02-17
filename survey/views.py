@@ -11,6 +11,7 @@ class HomeView(TemplateView):
 
 def submit_survey(request, survey_name):
     survey = get_object_or_404(models.Survey, name=survey_name)
+    reference = models.Reference.objects.filter(survey=survey).first()
     answer_list = []
     score = 0
     nscore = 0
@@ -38,6 +39,7 @@ def submit_survey(request, survey_name):
 
     context = {
         'survey': survey,
+        'reference': reference,
         'answers': answer_list,
         'score': score,
         'nscore': nscore,

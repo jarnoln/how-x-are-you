@@ -8,8 +8,9 @@
   {% trans 'No survey' %}
 {% else %}
 
-<h1 class="text-center"> {% trans 'You are' %} {{ npct|floatformat:0 }} % </h1>
+<h1 class="text-center"> {% trans 'You are' %} {{ npct|floatformat:0 }} % {{ reference.title }}</h1>
 
+<h3> {% trans 'Score' %} </h3>
 <table class="table">
   <thead>
     <tr>
@@ -22,7 +23,9 @@
 {% for answer in answers %}
     <tr>
       <td>{{ answer.question.title }}</td>
-      <td class="text-right">{{ answer.points }}</td>
+      <td class="text-right {% if answer.points < 0 %}table-danger{% elif answer.points > 0 %}table-success{% endif %}">
+        {{ answer.points }}
+      </td>
       <td class="text-right">{{ answer.npoints|floatformat:1 }}</td>
     </tr>
 {% endfor %}

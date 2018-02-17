@@ -15,7 +15,7 @@ class Survey(models.Model):
 
     @property
     def questions(self):
-        return Question.objects.filter(survey=self).order_by('order','title')
+        return Question.objects.filter(survey=self).order_by('order', 'title')
 
     def __str__(self):
         return self.name
