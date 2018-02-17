@@ -1,6 +1,6 @@
 # from unittest import skip
 from django.test import TestCase
-from survey.models import Survey, Question, Reference, Answer
+from survey.models import Survey, Question, Reference, Answer, Feedback
 
 
 class SurveyModelTest(TestCase):
@@ -74,3 +74,19 @@ class AnswerModelTest(TestCase):
         question = Question.objects.create(survey=survey, title='Why?')
         instance = Answer.objects.create(question=question, reference=reference, value=1)
         self.assertEqual(str(instance), 'Why?:1')
+
+
+class FeedbackModelTest(TestCase):
+    def test_can_save_and_load(self):
+        survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
+        reference = Reference.objects.create(survey=survey, name='plato', title='Plato')
+        instance = Feedback(reference=reference, title='Grasshopper', min_score=10, max_score=20)
+        instance.save()
+        self.assertEqual(Feedback.objects.all().count(), 1)
+        self.assertEqual(Feedback.objects.all()[0], instance)
+
+    def test_string(self):
+        survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
+        reference = Reference.objects.create(survey=survey, name='plato', title='Plato')
+        instance = Feedback.objects.create(reference=reference, title='Grasshopper', min_score=10, max_score=20)
+        self.assertEqual(str(instance), 'Grasshopper:from 10 to 20')

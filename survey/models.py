@@ -55,3 +55,19 @@ class Answer(models.Model):
 
     def __str__(self):
         return '{}:{}'.format(self.question.title, self.value)
+
+
+class Feedback(models.Model):
+    """ Give a little feedback based on score """
+    reference = models.ForeignKey(Reference, on_delete=models.CASCADE)
+    title = models.CharField(max_length=250)
+    description = models.TextField(default='', blank=True)
+    exact_score = models.FloatField(null=True, blank=True, default=None)
+    min_score = models.FloatField(default=0.0)
+    max_score = models.FloatField(default=100.0)
+
+    def __str__(self):
+        if self.exact_score:
+            return '{} == {}'.format(self.title, self.exact_score)
+        else:
+            return '{}:from {} to {}'.format(self.title, self.min_score, self.max_score)
