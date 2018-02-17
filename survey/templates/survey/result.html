@@ -29,24 +29,26 @@
     <tr>
       <th> {% trans 'Question' %} </th>
       <th class="text-right"> {% trans 'Points' %} </th>
-      <th class="text-right"> {% trans 'NPoints' %} </th>
+      <!-- <th class="text-right"> {% trans 'NPoints' %} </th> -->
     </tr>
   </thead>
   <tbody>
 {% for answer in answers %}
     <tr>
       <td>{{ answer.question.title }}</td>
+    {% comment %}
       <td class="text-right {% if answer.points < 0 %}table-danger{% elif answer.points > 0 %}table-success{% endif %}">
         {{ answer.points }}
-      </td>
+      </td> #}
+    {% endcomment %}
       <td class="text-right {% if answer.points < 0 %}table-danger{% elif answer.points > 0 %}table-success{% endif %}">
         {{ answer.npoints }}
       </td>
     </tr>
 {% endfor %}
     <tr>
-      <th> Total </th>
-      <th class="text-right"> {{ score }} / {{ max_score }} ({{ pct|floatformat:0 }} %)</th>
+      <th> {% trans 'Total' %} </th>
+      <!-- <th class="text-right"> {{ score }} / {{ max_score }} ({{ pct|floatformat:0 }} %)</th> -->
       <th class="text-right"> {{ nscore }} / {{ nmax_score }} ({{ npct|floatformat:0 }} %) </th>
     </tr>
   </tbody>

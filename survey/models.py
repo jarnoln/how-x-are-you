@@ -30,7 +30,7 @@ class Question(models.Model):
     edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return '{}:{}:{}'.format(self.survey.name, self.order, self.title)
 
 
 class Reference(models.Model):

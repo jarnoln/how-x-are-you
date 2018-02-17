@@ -41,7 +41,7 @@ class QuestionModelTest(TestCase):
     def test_string(self):
         survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
         instance = Question.objects.create(survey=survey, title='Why?')
-        self.assertEqual(str(instance), instance.title)
+        self.assertEqual(str(instance), 'philosophy:0:Why?')
 
 
 class ReferenceModelTest(TestCase):

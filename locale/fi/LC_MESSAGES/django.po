@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-17 19:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: survey/models.py:8
+msgid "name"
+msgstr "nimi"
+
+#: survey/models.py:9
+msgid "Must be unique. Used in URL."
+msgstr "Täytyy olla uniikki. Käytetään URLeissa."
+
+#: survey/templates/survey/base.html:20
+msgid "Home"
+msgstr "Etusivu"
+
+#: survey/templates/survey/base.html:27
+msgid "Admin"
+msgstr ""
+
+#: survey/templates/survey/result.html:8 survey/templates/survey/survey.html:8
+msgid "No survey"
+msgstr "Ei kyselyä"
+
+#: survey/templates/survey/result.html:12
+msgid "You are"
+msgstr "Olet"
+
+#: survey/templates/survey/result.html:26
+msgid "Score"
+msgstr "Pisteet"
+
+#: survey/templates/survey/result.html:30
+#: survey/templates/survey/survey.html:19
+msgid "Question"
+msgstr "Kysymys"
+
+#: survey/templates/survey/result.html:31
+msgid "Points"
+msgstr "Pisteet"
+
+#: survey/templates/survey/result.html:32
+msgid "NPoints"
+msgstr "Pisteet"
+
+#: survey/templates/survey/result.html:51
+msgid "Total"
+msgstr "Yhteensä"
+
+#: survey/templates/survey/result.html:57
+msgid "Back"
+msgstr "Takaisin"
+
+#: survey/templates/survey/survey.html:20
+msgid "Definitely yes"
+msgstr "Tottakai"
+
+#: survey/templates/survey/survey.html:21
+msgid "Maybe yes"
+msgstr "Ehkä joo"
+
+#: survey/templates/survey/survey.html:22
+msgid "Dunno"
+msgstr "EOS"
+
+#: survey/templates/survey/survey.html:23
+msgid "Maybe no"
+msgstr "Jospa ei"
+
+#: survey/templates/survey/survey.html:24
+msgid "Definitely no"
+msgstr "Ei tasan"
+
+#: survey/templates/survey/survey.html:40
+msgid "Submit"
+msgstr "Lähetä"
