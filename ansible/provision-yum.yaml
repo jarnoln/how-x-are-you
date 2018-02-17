@@ -1,0 +1,31 @@
+---
+- name: prepare server
+  hosts: all
+  become: true
+  vars:
+      host: "{{ inventory_hostname }}"
+
+  tasks:
+    - name: check connection
+      ping:
+
+    - name: install required packages
+      yum: pkg={{item}} state=present
+      with_items:
+        - nginx
+        - git
+        - python-virtualenv
+
+    - name: start nginx
+      service: name=nginx state=started
+
+    - name: write gunicorn upstart service script
+      template:
+          src=./upstart.gunicorn.conf.j2
+          dest=/etc/init/gunicorn-cvdb.conf
+      notify:
+          - restart gunicorn
+
+  handlers:
+    - name: restart gunicorn
+      service: name=gunicorn-howx.conf state=restarted

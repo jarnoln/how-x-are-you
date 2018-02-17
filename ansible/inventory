@@ -1,0 +1,5 @@
+[awsubuntu]
+howx.net ansible_user=ubuntu ansible_ssh_private_key_file=~/aws/amazonlinux.pem ansible_host=18.196.246.107
+
+# [digitalocean]
+# howx.net ansible_user=django
