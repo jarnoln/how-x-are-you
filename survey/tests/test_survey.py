@@ -11,11 +11,14 @@ class SurveyPageTest(TestCase):
 
     def test_default_content(self):
         survey = models.Survey.objects.create(name="test_survey", title="Test survey")
-
+        q1 = models.Question.objects.create(survey=survey, title="Question 1")
+        q2 = models.Question.objects.create(survey=survey, title="Question 2")
         response = self.client.get(reverse(self.url_name))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['survey'], survey)
         self.assertContains(response, survey.title)
+        self.assertContains(response, q1.title)
+        self.assertContains(response, q2.title)
         html = response.content.decode('utf8')
         # print(html)
         self.assertTrue(html.startswith('<!DOCTYPE html>'))

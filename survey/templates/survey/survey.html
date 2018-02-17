@@ -3,8 +3,19 @@
 
 {% block title %}{{ survey.title }}{% endblock %}
 {% block content %}
-  {% if not survey %}
-    {% trans 'No survey' %}
-  {% endif %}
-    <h1> {{ survey.title }} </h1>
+
+{% if not survey %}
+  {% trans 'No survey' %}
+{% endif %}
+<h1> {{ survey.title }} </h1>
+<p> {{ survey.description }} </p>
+
+<table class="table">
+{% for question in survey.question_set.all %}
+  <tr>
+    <td>{{ question.title }}</td>
+  </tr>
+{% endfor %}
+</table>
+
 {% endblock content %}
