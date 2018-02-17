@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class HomePageTest(TestCase):
     def test_reverse(self):
-        self.assertEqual(reverse('home'), '/')
+        self.assertEqual(reverse('home'), '/home/')
 
     def test_default_content(self):
         response = self.client.get(reverse('home'))

@@ -1,0 +1,10 @@
+{% extends "survey/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ survey.title }}{% endblock %}
+{% block content %}
+  {% if not survey %}
+    {% trans 'No survey' %}
+  {% endif %}
+    <h1> {{ survey.title }} </h1>
+{% endblock content %}
