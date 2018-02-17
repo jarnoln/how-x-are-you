@@ -57,6 +57,17 @@ class ReferenceModelTest(TestCase):
         instance = Reference.objects.create(survey=survey, name='plato', title='Plato')
         self.assertEqual(str(instance), instance.name)
 
+    def test_feedback(self):
+        survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
+        reference = Reference.objects.create(survey=survey, name='plato', title='Plato')
+        self.assertEqual(reference.feedback(0), None)
+        fb_1 = Feedback.objects.create(reference=reference, title='Grasshopper', min_score=0, max_score=25)
+        fb_2 = Feedback.objects.create(reference=reference, title='Guru', min_score=75, max_score=100)
+        self.assertEqual(reference.feedback(0), fb_1)
+        self.assertEqual(reference.feedback(25), None)
+        self.assertEqual(reference.feedback(80), fb_2)
+        self.assertEqual(reference.feedback(100), fb_2)
+
 
 class AnswerModelTest(TestCase):
     def test_can_save_and_load(self):

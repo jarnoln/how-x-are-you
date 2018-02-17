@@ -42,6 +42,20 @@ class Reference(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
 
+    def feedback(self, score):
+        """ Find feedback corresponding to given score """
+        feedbacks = Feedback.objects.filter(reference=self)
+        exact = feedbacks.filter(exact_score=score)
+        if exact.first():
+            return exact.first()
+
+        feedbacks = feedbacks.filter(min_score__lte=score)
+        if score == 100:
+            feedbacks = feedbacks.filter(max_score__gte=score)
+        else:
+            feedbacks = feedbacks.filter(max_score__gt=score)
+        return feedbacks.first()
+
     def __str__(self):
         return self.name
 
