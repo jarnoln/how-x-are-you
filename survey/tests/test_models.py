@@ -1,6 +1,6 @@
 # from unittest import skip
 from django.test import TestCase
-from questionnaire.models import Survey, Question, Reference, Answer
+from survey.models import Survey, Question, Reference, Answer
 
 
 class SurveyModelTest(TestCase):

@@ -16,4 +16,4 @@ class HomePageTest(TestCase):
 
     def test_uses_correct_template(self):
         response = self.client.get(reverse('home'))
-        self.assertTemplateUsed(response, 'questionnaire/home.html')
+        self.assertTemplateUsed(response, 'survey/home.html')
