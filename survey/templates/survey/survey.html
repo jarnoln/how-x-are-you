@@ -6,12 +6,12 @@
 
 {% if not survey %}
   {% trans 'No survey' %}
-{% endif %}
+{% else %}
 
 <h1> {{ survey.title }} </h1>
 <p> {{ survey.description }} </p>
 
-<form action="" method="post">
+<form action="{% url 'survey_submit' survey.id %}" method="post">
 {% csrf_token %}
 <table class="table">
   <thead>
@@ -40,4 +40,5 @@
 {% trans "Submit" as save_txt %}
 <div><input type="submit" class="btn btn-primary" value="{{ save_txt }}"></div>
 </form>
+{% endif %}
 {% endblock content %}
