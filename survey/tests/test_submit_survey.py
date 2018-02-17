@@ -18,11 +18,13 @@ class SubmitSurveyPageTest(TestCase):
         survey = models.Survey.objects.create(name="test_survey", title="Test survey")
         q1 = models.Question.objects.create(survey=survey, title="Question 1")
         ref = models.Reference.objects.create(survey=survey, name="testable", title="Testable")
+        fb = models.Feedback.objects.create(reference=ref, title="Excellent", min_score=90, max_score=100)
         response = self.client.post(reverse(self.url_name, args=[survey.name]),
                                     data={'q-{}'.format(q1.id): '2'},
                                     follow=True)
         self.assertEqual(response.context['survey'], survey)
         self.assertEqual(response.context['reference'], ref)
+        self.assertEqual(response.context['feedback'], fb)
         self.assertEqual(response.context['max_score'], 2)
         self.assertEqual(response.context['nmax_score'], 4)
         self.assertEqual(response.context['score'], 2)
@@ -32,3 +34,4 @@ class SubmitSurveyPageTest(TestCase):
         self.assertEqual(len(response.context['answers']), 1)
         # print(response.content)
         self.assertContains(response, "100 % Testable")
+        self.assertContains(response, fb.title)

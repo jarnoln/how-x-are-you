@@ -9,7 +9,7 @@
 {% else %}
 
 <h1 class="text-center"> {{ survey.title }} </h1>
-<p class="text-center"> {{ survey.description }} </p>
+<p class="text-center"> {{ survey.description|safe }} </p>
 
 <form action="{% url 'survey_submit' survey.name %}" method="post">
 {% csrf_token %}

@@ -37,9 +37,15 @@ def submit_survey(request, survey_name):
         pct = float(score * 100) / max_score
         npct = float(nscore * 100) / nmax_score
 
+    if reference:
+        feedback = reference.feedback(npct)
+    else:
+        feedback = None
+
     context = {
         'survey': survey,
         'reference': reference,
+        'feedback': feedback,
         'answers': answer_list,
         'score': score,
         'nscore': nscore,
