@@ -48,6 +48,14 @@ class SurveyDetailPageTest(TestCase):
         response = self.client.get(reverse(self.url_name, args=[survey.name]))
         self.assertTemplateUsed(response, 'survey/survey.html')
 
+    def test_two_surveys(self):
+        survey_1 = models.Survey.objects.create(name="survey_1", title="Survey 1")
+        survey_2 = models.Survey.objects.create(name="survey_2", title="Survey 2")
+        response = self.client.get(reverse(self.url_name, args=[survey_1.name]))
+        self.assertEqual(response.context['survey'], survey_1)
+        response = self.client.get(reverse(self.url_name, args=[survey_2.name]))
+        self.assertEqual(response.context['survey'], survey_2)
+
 
 class SurveyFirstPageTest(TestCase):
     url_name = 'survey_first'
