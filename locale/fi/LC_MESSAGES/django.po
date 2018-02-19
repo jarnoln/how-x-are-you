@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-17 19:05+0200\n"
+"POT-Creation-Date: 2018-02-19 22:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: survey/templates/survey/result.html:8 survey/templates/survey/survey.html:8
 msgid "No survey"
-msgstr "Ei kyselyä"
+msgstr "Ei testiä"
 
 #: survey/templates/survey/result.html:12
 msgid "You are"
@@ -90,3 +90,21 @@ msgstr "Ei tasan"
 #: survey/templates/survey/survey.html:40
 msgid "Submit"
 msgstr "Lähetä"
+
+#: survey/templates/survey/survey_list.html:4
+#, fuzzy
+#| msgid "No survey"
+msgid "Surveys"
+msgstr "Testit"
+
+#: survey/templates/survey/survey_list.html:10
+#, fuzzy
+#| msgid "No survey"
+msgid "Survey"
+msgstr "Testi"
+
+#: survey/templates/survey/survey_list.html:11
+#, fuzzy
+#| msgid "Question"
+msgid "Questions"
+msgstr "Kysymyksiä"
