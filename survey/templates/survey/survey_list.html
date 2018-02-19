@@ -14,7 +14,7 @@
   <tbody>
 {% for survey in survey_list %}
     <tr>
-      <td title="{{ survey.description }}">
+      <td title="{{ survey.description|striptags }}">
         <a href="{% url 'survey_detail' survey.name %}"> {{ survey.title }} </a>
       </td>
       <td class="text-right"> {{ survey.questions.count }} </td>
