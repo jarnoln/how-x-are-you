@@ -1,5 +1,12 @@
-from django.views.generic import TemplateView
+# from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from .models import Survey
 
 
-class HomeView(TemplateView):
-    template_name = 'survey/home.html'
+def home(request):
+    # surveys = Survey.objects.all()
+    if Survey.objects.count() == 1:
+        return HttpResponseRedirect(reverse('survey_detail', args=[Survey.objects.first().name]))
+    else:
+        return HttpResponseRedirect(reverse('survey_list'))
