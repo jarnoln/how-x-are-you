@@ -27,7 +27,7 @@
   <tbody>
 {% for question in survey.questions %}
     <tr>
-      <td>{{ question.title }}</td>
+      <td title="{{ question.description }}">{{ question.title }}</td>
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="2"> </td>
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="1"> </td>
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="0" checked="true"> </td>
