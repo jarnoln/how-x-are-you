@@ -33,7 +33,7 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.196.246.107', 'howx.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'howx.net']
 ADMINS = [('Jarno Luoma-Nirva', 'jarnoln@gmail.com')]
 
 # Application definition
