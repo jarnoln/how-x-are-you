@@ -3,6 +3,26 @@ from django.urls import reverse
 from survey import models
 
 
+class SurveyListTest(TestCase):
+    url_name = 'survey_list'
+
+    def test_reverse(self):
+        self.assertEqual(reverse(self.url_name), '/surveys/')
+
+    def test_uses_correct_template(self):
+        response = self.client.get(reverse(self.url_name))
+        self.assertTemplateUsed(response, 'survey/survey_list.html')
+
+    def test_default_context(self):
+        # creator = auth.get_user_model().objects.create(username='creator')
+        survey_1 = models.Survey.objects.create(name="survey_1", title="Survey 1")
+        survey_2 = models.Survey.objects.create(name="survey_2", title="Survey 2")
+        response = self.client.get(reverse(self.url_name))
+        self.assertEqual(response.context['survey_list'].count(), 2)
+        self.assertEqual(response.context['survey_list'][0], survey_1)
+        self.assertEqual(response.context['survey_list'][1], survey_2)
+
+
 class SurveyPageTest(TestCase):
     url_name = 'survey'
 

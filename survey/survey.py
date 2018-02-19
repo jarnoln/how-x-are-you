@@ -1,5 +1,9 @@
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
 from survey.models import Survey
+
+
+class SurveyList(ListView):
+    model = Survey
 
 
 class SurveyView(TemplateView):

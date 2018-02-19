@@ -20,6 +20,9 @@ class Survey(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['title']
+
 
 class Question(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)

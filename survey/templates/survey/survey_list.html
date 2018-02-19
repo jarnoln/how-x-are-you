@@ -1,0 +1,24 @@
+{% extends "survey/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Surveys' %}{% endblock %}
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th> {% trans 'Survey' %} </th>
+      <th class="text-right"> {% trans 'Questions' %} </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for survey in survey_list %}
+    <tr>
+      <td>{{ survey.title }}</td>
+      <td class="text-right"> {{ survey.questions.count }} </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
