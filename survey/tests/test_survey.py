@@ -53,7 +53,7 @@ class SurveyFirstPageTest(TestCase):
     url_name = 'survey_first'
 
     def test_reverse(self):
-        self.assertEqual(reverse(self.url_name), '/')
+        self.assertEqual(reverse(self.url_name), '/survey/first/')
 
     def test_default_content(self):
         survey = models.Survey.objects.create(name="test_survey", title="Test survey")
