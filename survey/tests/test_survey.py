@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from survey import models
+from users.tests.ext_test_case import ExtTestCase
 
 
 class SurveyListTest(TestCase):
@@ -80,3 +81,56 @@ class SurveyFirstPageTest(TestCase):
     def test_uses_correct_template(self):
         response = self.client.get(reverse(self.url_name))
         self.assertTemplateUsed(response, 'survey/survey.html')
+
+
+class CreateSurveyPage(ExtTestCase):
+    url_name = 'survey_create'
+
+    def test_reverse(self):
+        self.assertEqual(reverse(self.url_name), '/create/')
+
+    def test_uses_correct_template(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse(self.url_name))
+        self.assertTemplateUsed(response, 'survey/survey_form.html')
+
+    def test_default_context(self):
+        self.create_and_log_in_user()
+        # self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'en-us'})
+        response = self.client.get(reverse(self.url_name))
+        # self.assertEqual(response.context['title'], 'Create new blog')
+        # self.assertEqual(response.context['message'], '')
+
+    def test_can_create_new_survey(self):
+        self.assertEqual(models.Survey.objects.all().count(), 0)
+        self.create_and_log_in_user()
+        response = self.client.post(reverse(self.url_name), {
+            'name': 'test_survey',
+            'title': 'Test survey',
+            'description': 'For testing'},
+                                    follow=True)
+        self.assertEqual(models.Survey.objects.all().count(), 1)
+        self.assertEqual(response.context['survey'].name, 'test_survey')
+        self.assertEqual(response.context['survey'].title, 'Test survey')
+        self.assertEqual(response.context['survey'].description, 'For testing')
+
+    def test_cant_create_survey_if_not_logged_in(self):
+        response = self.client.get(reverse(self.url_name), follow=True)
+        self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_cant_create_survey_with_existing_name(self):
+        user = self.create_and_log_in_user()
+        models.Survey.objects.create(name="test_survey", title="Test survey")
+        self.assertEqual(models.Survey.objects.all().count(), 1)
+        # self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'en-us'})
+        response = self.client.post(
+            reverse(self.url_name),
+            {
+                'name': 'test_survey',
+                'title': 'Test survey',
+                'description': 'For testing'
+            },
+            follow=True)
+        self.assertEqual(models.Survey.objects.all().count(), 1)
+        self.assertTemplateUsed(response, 'survey/survey_form.html')
+        # self.assertContains(response, 'Survey with this Name already exists')

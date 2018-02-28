@@ -1,6 +1,7 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, CreateView
 from django.shortcuts import get_object_or_404
 from survey.models import Survey
+from django.urls import reverse
 
 
 class SurveyList(ListView):
@@ -20,3 +21,12 @@ class SurveyView(TemplateView):
         context = super(SurveyView, self).get_context_data(**kwargs)
         context['survey'] = survey
         return context
+
+
+class SurveyCreate(CreateView):
+    model = Survey
+    slug_field = 'name'
+    fields = ['name', 'title', 'description']
+
+    def get_success_url(self):
+        return reverse('survey_detail', args=[self.object.name])
