@@ -1,5 +1,6 @@
-from django.views.generic import ListView, TemplateView, CreateView
+from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect, Http404
 from survey.models import Survey
 from django.urls import reverse
 
@@ -27,6 +28,29 @@ class SurveyCreate(CreateView):
     model = Survey
     slug_field = 'name'
     fields = ['name', 'title', 'description']
+
+    def get_success_url(self):
+        return reverse('survey_detail', args=[self.object.name])
+
+
+class SurveyUpdate(UpdateView):
+    model = Survey
+    slug_field = 'name'
+    fields = ['title', 'description']
+
+    def render_to_response(self, context, **response_kwargs):
+        # logger = logging.getLogger(__name__)
+        # logger.warning('Tadaa!')
+        # if self.object.can_edit(self.request.user):
+        return super(SurveyUpdate, self).render_to_response(context, **response_kwargs)
+        # else:
+        #    return HttpResponseRedirect(reverse('survey_detail', args=[self.object.name]))
+
+    def form_valid(self, form):
+        # if self.object.can_edit(self.request.user):
+        return super(SurveyUpdate, self).form_valid(form)
+        # else:
+        #    return HttpResponseRedirect(reverse('survey_detail', args=[self.object.name]))
 
     def get_success_url(self):
         return reverse('survey_detail', args=[self.object.name])

@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib import auth
 from survey import models
 from users.tests.ext_test_case import ExtTestCase
 
@@ -134,3 +135,49 @@ class CreateSurveyPage(ExtTestCase):
         self.assertEqual(models.Survey.objects.all().count(), 1)
         self.assertTemplateUsed(response, 'survey/survey_form.html')
         # self.assertContains(response, 'Survey with this Name already exists')
+
+
+class UpdateSurveyPage(ExtTestCase):
+    url_name = 'survey_update'
+
+    def test_reverse(self):
+        self.assertEqual(reverse(self.url_name, args=['test_survey']), '/survey/test_survey/edit/')
+
+    def test_uses_correct_template(self):
+        user = self.create_and_log_in_user()
+        survey = models.Survey.objects.create(name="test_survey")
+        response = self.client.get(reverse(self.url_name, args=[survey.name]))
+        self.assertTemplateUsed(response, 'survey/survey_form.html')
+
+    def test_404_no_survey(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse(self.url_name, args=['test_blog']))
+        self.assertTemplateUsed(response, '404.html')
+
+    def test_can_update_survey(self):
+        user = self.create_and_log_in_user()
+        models.Survey.objects.create(name="test_survey", title="Test survey", description="Testing")
+        self.assertEqual(models.Survey.objects.all().count(), 1)
+        response = self.client.post(reverse(self.url_name, args=['test_survey']), {
+            'title': 'Test survey updated',
+            'description': 'Updated'},
+                                    follow=True)
+        self.assertEqual(models.Survey.objects.all().count(), 1)
+        survey = models.Survey.objects.all()[0]
+        self.assertEqual(survey.title, 'Test survey updated')
+        self.assertEqual(survey.description, 'Updated')
+        self.assertTemplateUsed(response, 'survey/survey.html')
+        self.assertEqual(response.context['survey'].title, 'Test survey updated')
+        self.assertEqual(response.context['survey'].description, 'Updated')
+
+    def test_cant_update_survey_if_not_logged_in(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        models.Survey.objects.create(name="test_survey", title="Test survey", description="Testing")
+        response = self.client.post(reverse(self.url_name, args=['test_survey']), {
+                                    'title': 'Test survey updated',
+                                    'description': 'Updated'},
+                                    follow=True)
+        blog = models.Survey.objects.all()[0]
+        self.assertEqual(blog.title, 'Test survey')
+        self.assertEqual(blog.description, 'Testing')
+        self.assertTemplateUsed(response, 'account/login.html')
