@@ -1,11 +1,13 @@
 # from unittest import skip
 from django.test import TestCase
+from django.contrib import auth
 from survey.models import Survey, Question, Reference, Answer, Feedback
 
 
 class SurveyModelTest(TestCase):
     def test_can_save_and_load(self):
-        instance = Survey(name='philosophy', title='Philosophical questions')
+        creator = auth.get_user_model().objects.create(username='creator')
+        instance = Survey(creator=creator, name='philosophy', title='Philosophical questions')
         instance.save()
         self.assertEqual(Survey.objects.all().count(), 1)
         self.assertEqual(Survey.objects.all()[0], instance)

@@ -1,5 +1,5 @@
 from django.db import models
-# from django.contrib import auth
+from django.contrib import auth
 from django.utils.translation import ugettext_lazy
 
 
@@ -10,7 +10,7 @@ class Survey(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    # created_by = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, related_name='blog_created_by')
+    creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, default=None, blank=True)
     edited = models.DateTimeField(auto_now=True)
 
     @property
