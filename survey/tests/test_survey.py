@@ -104,7 +104,7 @@ class CreateSurveyPage(ExtTestCase):
 
     def test_can_create_new_survey(self):
         self.assertEqual(models.Survey.objects.all().count(), 0)
-        self.create_and_log_in_user()
+        user = self.create_and_log_in_user()
         response = self.client.post(reverse(self.url_name), {
             'name': 'test_survey',
             'title': 'Test survey',
@@ -114,6 +114,7 @@ class CreateSurveyPage(ExtTestCase):
         self.assertEqual(response.context['survey'].name, 'test_survey')
         self.assertEqual(response.context['survey'].title, 'Test survey')
         self.assertEqual(response.context['survey'].description, 'For testing')
+        self.assertEqual(response.context['survey'].creator, user)
 
     def test_cant_create_survey_if_not_logged_in(self):
         response = self.client.get(reverse(self.url_name), follow=True)

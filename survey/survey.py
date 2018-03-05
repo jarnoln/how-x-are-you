@@ -29,6 +29,10 @@ class SurveyCreate(CreateView):
     slug_field = 'name'
     fields = ['name', 'title', 'description']
 
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super(SurveyCreate, self).form_valid(form)
+
     def get_success_url(self):
         return reverse('survey_detail', args=[self.object.name])
 
