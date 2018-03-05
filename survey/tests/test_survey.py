@@ -146,7 +146,7 @@ class UpdateSurveyPage(ExtTestCase):
 
     def test_uses_correct_template(self):
         user = self.create_and_log_in_user()
-        survey = models.Survey.objects.create(name="test_survey")
+        survey = models.Survey.objects.create(creator=user, name="test_survey")
         response = self.client.get(reverse(self.url_name, args=[survey.name]))
         self.assertTemplateUsed(response, 'survey/survey_form.html')
 
@@ -157,7 +157,7 @@ class UpdateSurveyPage(ExtTestCase):
 
     def test_can_update_survey(self):
         user = self.create_and_log_in_user()
-        models.Survey.objects.create(name="test_survey", title="Test survey", description="Testing")
+        models.Survey.objects.create(creator=user, name="test_survey", title="Test survey", description="Testing")
         self.assertEqual(models.Survey.objects.all().count(), 1)
         response = self.client.post(reverse(self.url_name, args=['test_survey']), {
             'title': 'Test survey updated',
@@ -173,7 +173,7 @@ class UpdateSurveyPage(ExtTestCase):
 
     def test_cant_update_survey_if_not_logged_in(self):
         creator = auth.get_user_model().objects.create(username='creator')
-        models.Survey.objects.create(name="test_survey", title="Test survey", description="Testing")
+        models.Survey.objects.create(creator=creator, name="test_survey", title="Test survey", description="Testing")
         response = self.client.post(reverse(self.url_name, args=['test_survey']), {
                                     'title': 'Test survey updated',
                                     'description': 'Updated'},
@@ -182,3 +182,16 @@ class UpdateSurveyPage(ExtTestCase):
         self.assertEqual(blog.title, 'Test survey')
         self.assertEqual(blog.description, 'Testing')
         self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_cant_update_survey_if_not_creator(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        models.Survey.objects.create(creator=creator, name="test_survey", title="Test survey", description="Testing")
+        self.create_and_log_in_user()
+        response = self.client.post(reverse(self.url_name, args=['test_survey']), {
+                                    'title': 'Test survey updated',
+                                    'description': 'Updated'},
+                                    follow=True)
+        blog = models.Survey.objects.all()[0]
+        self.assertEqual(blog.title, 'Test survey')
+        self.assertEqual(blog.description, 'Testing')
+        self.assertTemplateUsed(response, 'survey/survey.html')
