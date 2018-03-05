@@ -16,6 +16,13 @@ class SurveyModelTest(TestCase):
         instance = Survey.objects.create(name='philosophy', title='Philosophical questions')
         self.assertEqual(str(instance), instance.name)
 
+    def test_can_edit(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        instance = Survey.objects.create(creator=creator, name='philosophy', title='Philosophical questions')
+        self.assertEqual(instance.can_edit(creator), True)
+        other_user = auth.get_user_model().objects.create(username='other')
+        self.assertEqual(instance.can_edit(other_user), False)
+
     def test_questions(self):
         survey = Survey.objects.create(name='philosophy', title='Philosophical questions')
         self.assertEqual(survey.questions.count(), 0)

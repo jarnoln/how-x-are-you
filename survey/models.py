@@ -13,6 +13,12 @@ class Survey(models.Model):
     creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, default=None, blank=True)
     edited = models.DateTimeField(auto_now=True)
 
+    def can_edit(self, user):
+        if user == self.creator:
+            return True
+
+        return False
+
     @property
     def questions(self):
         return Question.objects.filter(survey=self).order_by('order', 'title')
