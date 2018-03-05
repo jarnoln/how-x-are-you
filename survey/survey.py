@@ -19,8 +19,14 @@ class SurveyView(TemplateView):
         else:
             survey = Survey.objects.first()
 
+        if survey:
+            can_edit = survey.can_edit(self.request.user)
+        else:
+            can_edit = False
+
         context = super(SurveyView, self).get_context_data(**kwargs)
         context['survey'] = survey
+        context['can_edit'] = can_edit
         return context
 
 
