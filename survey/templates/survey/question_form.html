@@ -15,7 +15,14 @@
 
 <table class="table">
 
-{{ form.as_table }}
+  <tr>
+    <th> <label for="id_title">{% trans 'Question' %}</label></th>
+    <td> <input type="text" name="title" value="{{ question.title }}" required maxlength="250" size="100" id="id_title" /></td>
+  </tr>
+  <tr>
+    <th><label for="id_description">{% trans 'Description' %}:</label></th>
+    <td><textarea name="description" rows="10" cols="100" id="id_description"></textarea></td>
+  </tr>
 
 {% trans "Save" as save_txt %}
   <tr> <td colspan="2"> <input type="submit" class="btn btn-primary" value="{{ save_txt }}"> </td> </tr>

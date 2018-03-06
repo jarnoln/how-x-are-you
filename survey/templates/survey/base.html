@@ -27,6 +27,13 @@
             <a class="nav-link" id="navbar_users" href="/admin/"> {% trans 'Admin' %} </a>
           </li>
     {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" id="navbar_users" href="{% url 'account_logout' %}"> {% trans 'Logout' %} </a>
+          </li>
+  {% else %}
+          <li class="nav-item">
+            <a class="nav-link" id="navbar_users" href="{% url 'account_login' %}"> {% trans 'Login' %} </a>
+          </li>
   {% endif %}
         </ul>
       </div>
