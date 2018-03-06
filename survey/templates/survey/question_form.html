@@ -6,7 +6,7 @@
 <h1> {{ survey.title }} </h1>
 
 {% if question %}
-<form action="{% url 'question_update' survey.name question.id %}" method="post">
+<form action="{% url 'question_update' question.survey.name question.id %}" method="post">
 {% else %}
 <h1> {% trans "Create new question" %} </h1>
 <form action="{% url 'question_create' survey.name %}" method="post">

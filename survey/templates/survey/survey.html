@@ -44,6 +44,9 @@
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="0" checked="true"> </td>
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="-1"> </td>
       <td class="text-center"> <input type="radio" name="q-{{ question.id }}" value="-2"> </td>
+    {% if can_edit %}
+      <td> <a class="btn btn-primary btn-sm" href="{% url 'question_update' survey.name question.id %}">Edit</a></td>
+    {% endif %}
     </tr>
 {% endfor %}
   </tbody>

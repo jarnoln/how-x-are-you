@@ -37,21 +37,26 @@ class QuestionUpdate(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         survey_name = kwargs['survey_name']
         self.survey = get_object_or_404(Survey, name=survey_name)
-        return super(QuestionCreate, self).dispatch(request, *args, **kwargs)
+        return super(QuestionUpdate, self).dispatch(request, *args, **kwargs)
 
     def render_to_response(self, context, **response_kwargs):
         # logger = logging.getLogger(__name__)
         # logger.warning('Tadaa!')
-        if self.object.can_edit(self.request.user):
+        if self.survey.can_edit(self.request.user):
             return super(QuestionUpdate, self).render_to_response(context, **response_kwargs)
         else:
             return HttpResponseRedirect(reverse('survey_detail', args=[self.survey.name]))
 
     def form_valid(self, form):
-        if self.object.can_edit(self.request.user):
+        if self.survey.can_edit(self.request.user):
             return super(QuestionUpdate, self).form_valid(form)
         else:
             return HttpResponseRedirect(reverse('survey_detail', args=[self.survey.name]))
 
     def get_success_url(self):
         return reverse('survey_detail', args=[self.survey.name])
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionUpdate, self).get_context_data(**kwargs)
+        context['survey'] = self.survey
+        return context
