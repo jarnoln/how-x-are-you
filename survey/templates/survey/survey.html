@@ -16,6 +16,9 @@
   <a class="btn btn-primary" href="{% url 'survey_update' survey.name %}">
     {% trans 'Edit' %}
   </a>
+  <a class="btn btn-primary" href="{% url 'question_create' survey.name %}">
+    {% trans 'New question' %}
+  </a>
 </p>
 {% endif %}
 

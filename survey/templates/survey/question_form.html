@@ -1,0 +1,28 @@
+{% extends "survey/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1> {{ survey.title }} </h1>
+
+{% if question %}
+<form action="{% url 'question_update' survey.name question.id %}" method="post">
+{% else %}
+<h1> {% trans "Create new question" %} </h1>
+<form action="{% url 'question_create' survey.name %}" method="post">
+{% endif %}
+{% csrf_token %}
+
+<table class="table">
+
+{{ form.as_table }}
+
+{% trans "Save" as save_txt %}
+  <tr> <td colspan="2"> <input type="submit" class="btn btn-primary" value="{{ save_txt }}"> </td> </tr>
+  <tr> <td colspan="2"> <a href="{% url 'survey_detail' survey.name %}"> {% trans "Back" %} </a> </td> </tr>
+
+</table>
+
+</form>
+
+{% endblock %}
