@@ -28,4 +28,6 @@ jobs:
     - name: Run Tests
       run: |
         python howx/generate_passwords.py howx/passwords.py
+        python manage.py makemigrations howx
+        python manage.py migrate
         python manage.py test
